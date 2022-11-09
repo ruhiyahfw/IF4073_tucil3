@@ -6,7 +6,7 @@ classdef EdgeDetection
             H =  [1 1 1; 1 -8 1;1 1 1];
 
             % Konvolusi dan uji nilai ambang
-            laplaceEdge = uint8(convn(double(image), double(H)));
+            laplaceEdge = uint8(convn(double(image), double(H),"same"));
         end
 
         function res = edgeDetection(image, algorithm)

@@ -30,6 +30,7 @@ classdef ObjectSegmentation
                 disp("ya");
                 res(:,:) = image(:,:).*uint8(segmask);
             else
+                disp("tdk");
                 res(:,:,1) = image(:,:,1).*uint8(segmask);
                 res(:,:,2) = image(:,:,2).*uint8(segmask);
                 res(:,:,3) = image(:,:,3).*uint8(segmask);
