@@ -5,8 +5,37 @@ classdef EdgeDetection
             % H = [0 1 0; 1 -4 1; 0 1 0];
             H =  [1 1 1; 1 -8 1;1 1 1];
 
-            % Konvolusi dan uji nilai ambang
+            % Konvolusi untuk mendapatkan tepi
             laplaceEdge = uint8(convn(double(image), double(H),"same"));
+        end
+
+        function logEdge = edgeDetectionLoG(image)
+            % mask konvolusi LoG
+            H = [0 0 -1 0 0;
+                 0 -1 -2 -1 0;
+                -1 -2 16 -2 -1;
+                 0 -1 -2 -1 0;
+                 0 0 -1 0 0];
+
+            % Konvolusi untuk mendapatkan tepi
+            logEdge = uint8(convn(double(image), double(H),"same"));
+        end
+
+        function sobelEdge = edgeDetectionSobel(image)
+            % Mask konvolusi Sobe;
+            Sx = [-1 0 1;
+                  -2 0 2;
+                  -1 0 1 ];
+            Sy = [1 2 1;
+                  0 0 0;
+                 -1 -2 -1];
+
+            % Konvolusi
+            Jx = conv2(double(image), double(Sx), "same");
+            Jy = conv2(double(image), double(Sy), "same");
+
+            % dapatkan edge
+            sobelEdge = uint8(sqrt(Jx.^2 + Jy.^2));
         end
 
         function prewittEdge = edgeDetectionPrewitt(image)
@@ -48,7 +77,9 @@ classdef EdgeDetection
                 case "Laplace"
                     res = EdgeDetection.edgeDetectionLaplace(image);
                 case "LoG"
+                    res = EdgeDetection.edgeDetectionLoG(image);
                 case "Sobel"
+                    res = EdgeDetection.edgeDetectionSobel(image);
                 case "Prewitt"
                     res = EdgeDetection.edgeDetectionPrewitt(image);
                 case "Roberts"
