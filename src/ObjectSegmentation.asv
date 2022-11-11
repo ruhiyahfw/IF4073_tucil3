@@ -1,6 +1,8 @@
 classdef ObjectSegmentation
     methods (Static)
         function res = threshold(image, threshold_algorithm, T_input)
+            % function to converting image to binary
+            % based on threshold algorithm selected
             if (threshold_algorithm == "Selected Threshold")
                 T = T_input/255;
                 res = imbinarize(image, T);
@@ -17,15 +19,9 @@ classdef ObjectSegmentation
             bwimg = ObjectSegmentation.threshold(image, threshold_algorithm, T_input);
             
             % get segmentation mask
-            %res = imclose(res, strel('disk',5));
-            %res = imclearborder(bwimg);
-            %res = bwareaopen(res, 50);
-            
-            %res = imfill(res, 4, 'holes');
-            %res = imclose(res, strel('disk',100));
-            
+            % clean piv
             res = imclearborder(bwimg);
-            res = imclose(res, strel('disk', ));
+            res = imclose(res, strel('line', 10,0));
             res = imfill(res, 'holes');
             res = imopen(res, strel(ones(3,3)));
             res = bwareaopen(res, 1500);
